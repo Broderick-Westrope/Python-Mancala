@@ -1,5 +1,6 @@
 from players import Human, RandomAI, MonteCarloAI
 from mancala import Mancala
+from board import Board
 
 
 def Menu():
@@ -16,25 +17,24 @@ def Game():
     startingStones = GetStartingStones()
 
     name = input("What's your name? ")
-    p1 = Human(startingStones, name)
+    p1 = Human(0, name)
 
     name = input("What's your opponents name? ")
     p2 = GetPlayer(
-        name, startingStones, "Would you like your opponent to be [H]uman, [R]andom-Choice AI, or [M]onte-Carlo AI? ")
+        1, name, "Would you like your opponent to be [H]uman, [R]andom-Choice AI, or [M]onte-Carlo AI? ")
     game = Mancala(p1, p2)
-
-    game.Begin()
+    game.Begin(Board(startingStones))
 
 
 def Simulation():
     startingStones = GetStartingStones()
 
     name = input("What's the name of Player 1? ")
-    p1 = RandomAI(startingStones, name)
+    p1 = RandomAI(0, name)
     name = input("What's the name of Player 2? ")
-    p2 = RandomAI(startingStones, name)
+    p2 = RandomAI(1, name)
     game = Mancala(p1, p2)
-    game.Begin()
+    game.Begin(Board(startingStones))
 
 
 def GetStartingStones():
@@ -51,15 +51,15 @@ def GetStartingStones():
     return startingStones
 
 
-def GetPlayer(name, startingStones, message, canBeHuman=True):
+def GetPlayer(id, name, message, canBeHuman=True):
     while True:
         val = input(message)
         if canBeHuman and (val == "H" or val == "h"):
-            return Human(startingStones, name)
+            return Human(id, name)
         elif val == "R" or val == "r":
-            return RandomAI(startingStones, name)
+            return RandomAI(id, name)
         elif val == "M" or val == "m":
-            return MonteCarloAI(startingStones, name)
+            return MonteCarloAI(id, name)
         else:
             print("** Please enter a valid option **")
 

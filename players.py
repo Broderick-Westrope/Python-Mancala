@@ -2,14 +2,14 @@ from random import choice
 
 
 class Player:
-    def __init__(self, id, name="Player",  startingStones=4):
+    def __init__(self, id, name="Player"):
         self.id = id
         self.name = name
 
 
 class Human(Player):
-    def __init__(self, id, name="Human", startingStones=4):
-        super().__init__(id, name=name, startingStones=startingStones)
+    def __init__(self, id, name="Human"):
+        super().__init__(id, name=name)
 
     def GetMove(self, board):
         while True:
@@ -19,7 +19,7 @@ class Human(Player):
                 if val > 6 or val < 1:
                     raise ValueError(
                         "Out of bounds. Must be in the range 1-6.")
-                if self.pockets[val-1] <= 0:
+                if board.pockets[self.id][val-1] <= 0:
                     raise ValueError("Chose an empty pocket.")
                 break
             except ValueError:
@@ -29,8 +29,8 @@ class Human(Player):
 
 
 class RandomAI(Player):
-    def __init__(self, id, name="Random AI", startingStones=4):
-        super().__init__(id, name=name, startingStones=startingStones)
+    def __init__(self, id, name="Random AI"):
+        super().__init__(id, name=name)
 
     def GetMove(self, board):
         candidates = list(range(6))
@@ -42,8 +42,8 @@ class RandomAI(Player):
 
 
 class MonteCarloAI(Player):
-    def __init__(self, id, name="Monte-Carlo AI", startingStones=4):
-        super().__init__(id, name=name, startingStones=startingStones)
+    def __init__(self, id, name="Monte-Carlo AI"):
+        super().__init__(id, name=name)
 
     def BestMove():
         pass

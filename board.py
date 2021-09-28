@@ -20,16 +20,19 @@ class Board:
     def PlaceMove(self, pid, index):
         # This is the index of the player who we are giving stones to currently
         p = copy(pid)
-        stonesToPlay = self.GetStones(pid, index)
+        i = copy(index)
+        stonesToPlay = self.GetStones(pid, i)
         while stonesToPlay > 0:
-            index += 1
-            if index > 6:
-                index = 0
+            i += 1
+            if i > 6:
+                i = 0
                 p = (0 if p == 1 else 1)
-            if index == 6:
+            if i == 6:
                 self.mancala[p] += 1
             else:
-                self.pockets[p][index] += 1
+                # Skip the pocket we got the stones from (when we do a lap)
+                if p != pid or i != index:
+                    self.pockets[p][i] += 1
             stonesToPlay -= 1
 
     def IsGameOver(self):
