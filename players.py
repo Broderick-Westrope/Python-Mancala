@@ -12,7 +12,9 @@ class Player:
         self.pockets[6] = 0
 
     def AllEmpty(self):
+        # print(self.name + ":")
         for i in range(6):
+            # print(str(i) + " has " + str(self.pockets[i]))
             if self.pockets[i] > 0:
                 return False
         return True
@@ -60,3 +62,5 @@ class RandomAI(Player):
 class MonteCarloAI(Player):
     def __init__(self, id, name="Monte-Carlo AI", startingStones=4):
         super().__init__(id, name=name, startingStones=startingStones)
+
+    def BestMove()
