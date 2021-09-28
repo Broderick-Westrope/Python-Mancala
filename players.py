@@ -1,5 +1,3 @@
-from helper import Controller
-from copy import copy
 from random import choice
 
 
@@ -7,29 +5,13 @@ class Player:
     def __init__(self, id, name="Player",  startingStones=4):
         self.id = id
         self.name = name
-        # 7th Pocket is actually the Mancala
-        self.pockets = [startingStones] * 7
-        self.pockets[6] = 0
-
-    def AllEmpty(self):
-        # print(self.name + ":")
-        for i in range(6):
-            # print(str(i) + " has " + str(self.pockets[i]))
-            if self.pockets[i] > 0:
-                return False
-        return True
-
-    def GetStones(self, index):
-        stones = copy(self.pockets[index])
-        self.pockets[index] = 0
-        return stones
 
 
 class Human(Player):
     def __init__(self, id, name="Human", startingStones=4):
         super().__init__(id, name=name, startingStones=startingStones)
 
-    def GetMove(self):
+    def GetMove(self, board):
         while True:
             val = input("What pocket would you like to play? (1-6) ")
             try:
@@ -50,11 +32,11 @@ class RandomAI(Player):
     def __init__(self, id, name="Random AI", startingStones=4):
         super().__init__(id, name=name, startingStones=startingStones)
 
-    def GetMove(self):
+    def GetMove(self, board):
         candidates = list(range(6))
         while True:
             val = choice(candidates)
-            if self.pockets[val] > 0:
+            if board.pockets[self.id][val] > 0:
                 break
         return val
 
@@ -63,4 +45,5 @@ class MonteCarloAI(Player):
     def __init__(self, id, name="Monte-Carlo AI", startingStones=4):
         super().__init__(id, name=name, startingStones=startingStones)
 
-    def BestMove()
+    def BestMove():
+        pass

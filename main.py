@@ -1,5 +1,4 @@
 from players import Human, RandomAI, MonteCarloAI
-from helper import Controller
 from mancala import Mancala
 
 
@@ -23,6 +22,7 @@ def Game():
     p2 = GetPlayer(
         name, startingStones, "Would you like your opponent to be [H]uman, [R]andom-Choice AI, or [M]onte-Carlo AI? ")
     game = Mancala(p1, p2)
+
     game.Begin()
 
 
