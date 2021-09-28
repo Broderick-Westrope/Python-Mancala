@@ -1,4 +1,4 @@
-from player import Player
+from players import Human, RandomAI, MonteCarloAI
 from helper import Controller
 from mancala import Mancala
 
@@ -14,13 +14,14 @@ def Menu():
 
 
 def Game():
-    name = input("What's your name? ")
     startingStones = GetStartingStones()
-    p1 = Player(startingStones, name, Controller.human)
-    p2Controller = GetController(
-        "Would you like your opponent to be [H]uman, [R]andom-Choice AI, or [M]onte-Carlo AI? ")
+
+    name = input("What's your name? ")
+    p1 = Human(startingStones, name)
+
     name = input("What's your opponents name? ")
-    p2 = Player(startingStones, name, p2Controller)
+    p2 = GetPlayer(
+        name, startingStones, "Would you like your opponent to be [H]uman, [R]andom-Choice AI, or [M]onte-Carlo AI? ")
     game = Mancala(p1, p2)
     game.Begin()
 
@@ -43,15 +44,15 @@ def GetStartingStones():
     return startingStones
 
 
-def GetController(message, canBeHuman=True):
+def GetPlayer(name, startingStones, message, canBeHuman=True):
     while True:
         val = input(message)
         if canBeHuman and (val == "H" or val == "h"):
-            return Controller.human
+            return Human(startingStones, name)
         elif val == "R" or val == "r":
-            return Controller.random
+            return RandomAI(startingStones, name)
         elif val == "M" or val == "m":
-            return Controller.monteCarlo
+            return MonteCarloAI(startingStones, name)
         else:
             print("** Please enter a valid option **")
 

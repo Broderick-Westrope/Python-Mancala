@@ -1,23 +1,57 @@
-from player import Player
+from players import Human, RandomAI, MonteCarloAI
 from helper import CoinToss
 
 
 class Mancala:
     def __init__(self, p1, p2):
-        self.p1 = p1
-        self.p2 = p2
+        self.players = [None] * 2
+        self.players[0] = p1
+        self.players[1] = p2
 
     def Begin(self):
         self.turn = CoinToss()
         while not self.IsGameOver():
-            player = (self.p1.name if self.turn == 0 else self.p2.name)
-            print(player + "'s Turn:")
-            self.PrintBoard()
-            input("")
+            player = self.players[self.turn]
+            print(player.name + "'s Turn:")
+            # self.PrintBoard()
+            self.PrintValues()
+            index = player.GetMove()
+            self.PlaceMove(index)
             self.turn = (0 if self.turn == 1 else 1)
 
+    def PlaceMove(self, index):
+        p = self.turn  # This is the index of the player who we are giving stones to currently
+        stonesToPlay = self.players[p].GetStones(index)
+        while stonesToPlay > 0:
+            index += 1
+            if index > 6:
+                index = 0
+                p = (0 if p == 1 else 1)
+            self.players[p].pockets[index] += 1
+            stonesToPlay -= 1
+
     def IsGameOver(self):
-        return self.p1.AllEmpty() or self.p2.AllEmpty()
+        return self.players[0].AllEmpty() or self.players[1].AllEmpty()
+
+    def PrintValues(self):
+        playerLine = (str(self.players[0].name) + " \t" +
+                      "  M:" + str(self.players[0].pockets[6]) +
+                      "  6:" + str(self.players[0].pockets[5]) +
+                      "  5:" + str(self.players[0].pockets[4]) +
+                      "  4:" + str(self.players[0].pockets[3]) +
+                      "  3:" + str(self.players[0].pockets[2]) +
+                      "  2:" + str(self.players[0].pockets[1]) +
+                      "  1:" + str(self.players[0].pockets[0]))
+        print(playerLine)
+        playerLine = (str(self.players[1].name) + " \t" +
+                      "  1:" + str(self.players[1].pockets[0]) +
+                      "  2:" + str(self.players[1].pockets[1]) +
+                      "  3:" + str(self.players[1].pockets[2]) +
+                      "  4:" + str(self.players[1].pockets[3]) +
+                      "  5:" + str(self.players[1].pockets[4]) +
+                      "  6:" + str(self.players[1].pockets[5]) +
+                      "  M:" + str(self.players[1].pockets[6]))
+        print(playerLine)
 
     def PrintBoard(self):
         # region - Top Row (Top of Board)
@@ -132,7 +166,7 @@ class Mancala:
 
 
 if __name__ == '__main__':
-    p1 = Player()
-    p2 = Player()
+    p1 = Human(0, "Brodie")
+    p2 = Human(1, "Fred")
     game = Mancala(p1, p2)
-    game.PrintBoard()
+    game.Begin()
