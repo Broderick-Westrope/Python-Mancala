@@ -39,11 +39,3 @@ class RandomAI(Player):
             if board.pockets[self.id][val] > 0:
                 break
         return val
-
-
-class MonteCarloAI(Player):
-    def __init__(self, id, name="Monte-Carlo AI"):
-        super().__init__(id, name=name)
-
-    def BestMove():
-        pass

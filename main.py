@@ -1,4 +1,5 @@
-from players import Human, RandomAI, MonteCarloAI
+from PlayerControllers.players import Human, RandomAI
+from PlayerControllers.MonteCarloAI import MonteCarloAI
 from mancala import Mancala
 from board import Board
 
@@ -30,9 +31,11 @@ def Simulation():
     startingStones = GetStartingStones()
 
     name = input("What's the name of Player 1? ")
-    p1 = RandomAI(0, name)
+    p1 = GetPlayer(
+        0, name, "Would you like player 1 to be [H]uman, [R]andom-Choice AI, or [M]onte-Carlo AI? ", False)
     name = input("What's the name of Player 2? ")
-    p2 = RandomAI(1, name)
+    p2 = GetPlayer(
+        0, name, "Would you like player 2 to be [H]uman, [R]andom-Choice AI, or [M]onte-Carlo AI? ", False)
     game = Mancala(p1, p2)
     game.Begin(Board(startingStones))
 

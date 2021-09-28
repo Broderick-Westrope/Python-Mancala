@@ -1,4 +1,5 @@
-from players import Human, RandomAI, MonteCarloAI
+from PlayerControllers.MonteCarloAI import MonteCarloAI
+from PlayerControllers.players import Human, RandomAI
 from helper import CoinToss
 from board import Board
 
@@ -11,9 +12,10 @@ class Mancala:
 
     def Begin(self, board):
         self.turn = CoinToss()
+        turnCount = 1
         while not board.IsGameOver():
             player = self.players[self.turn]
-            print("\n" + player.name + "'s Turn:")
+            print("\n" + player.name + "'s Turn: \t (Turn " + str(turnCount) + ")")
             # board.PrintBoard()
             # TODO - Change this to print the values on the board
             board.PrintValues(self.players[0].name, self.players[1].name)
@@ -21,11 +23,13 @@ class Mancala:
             print(player.name + " played " + str(index+1))
             board.PlaceMove(self.turn, index)
             self.turn = (0 if self.turn == 1 else 1)
-        board.DeclareWinner(self.players[0].name, self.players[1].name)
+            turnCount += 1
+        board.DeclareWinner(
+            self.players[0].name, self.players[1].name, turnCount)
 
 
 if __name__ == '__main__':
-    p1 = RandomAI(0, "Brodie")
-    p2 = RandomAI(1, "Fred")
+    p1 = MonteCarloAI(0, "Brodie")
+    p2 = MonteCarloAI(1, "Fred")
     game = Mancala(p1, p2)
     game.Begin(Board())

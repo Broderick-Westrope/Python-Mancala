@@ -38,7 +38,7 @@ class Board:
     def IsGameOver(self):
         return self.AllEmpty(0) or self.AllEmpty(1)
 
-    def DeclareWinner(self, p1Name, p2Name):
+    def DeclareWinner(self, p1Name, p2Name, numberOfMoves):
         print("")
         if self.AllEmpty(0):
             print(p1Name + " ran out of stones.")
@@ -55,7 +55,7 @@ class Board:
             print(p2Name + " won the game!")
         else:
             print("It was a draw!")
-        print("\nFinal Board:")
+        print("\nFinal Board: (After " + str(numberOfMoves) + " Turns)")
         self.PrintValues(p1Name, p2Name)
 
     def PrintValues(self, p1Name, p2Name):
