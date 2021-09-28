@@ -27,7 +27,14 @@ def Game():
 
 
 def Simulation():
-    pass
+    startingStones = GetStartingStones()
+
+    name = input("What's the name of Player 1? ")
+    p1 = RandomAI(startingStones, name)
+    name = input("What's the name of Player 2? ")
+    p2 = RandomAI(startingStones, name)
+    game = Mancala(p1, p2)
+    game.Begin()
 
 
 def GetStartingStones():

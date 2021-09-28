@@ -1,5 +1,6 @@
 from helper import Controller
 from copy import copy
+from random import choice
 
 
 class Player:
@@ -46,6 +47,14 @@ class Human(Player):
 class RandomAI(Player):
     def __init__(self, id, name="Random AI", startingStones=4):
         super().__init__(id, name=name, startingStones=startingStones)
+
+    def GetMove(self):
+        candidates = list(range(6))
+        while True:
+            val = choice(candidates)
+            if self.pockets[val] > 0:
+                break
+        return val
 
 
 class MonteCarloAI(Player):
